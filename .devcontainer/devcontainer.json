@@ -1,11 +1,11 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
-   "name": "TypeScript example",
+   "name": "Keyclock example",
    "dockerComposeFile": [
       "docker-compose.yml",
    ],
    // The name of the following service has to match one of the services in docker-compose.yml
-   "service": "typescript-dev",
+   "service": "keycloak-dev",
    "workspaceFolder": "/work",
    "customizations": {
       "vscode": {
