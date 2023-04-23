@@ -40,7 +40,7 @@ services:
       hostname: idp.local
       ports:
          - "30424:8080"
-         - "30425:8443"
+         # Optional: Keycloak is listening on 8443 for HTTPs. Need to configure SSL certificate to enable.
       environment:
          KC_HOSTNAME: localhost
          KC_HOSTNAME_STRICT: "false"
