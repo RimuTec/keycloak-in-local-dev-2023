@@ -33,7 +33,6 @@ services:
          rimutec:
 
    idp:
-      image: quay.io/keycloak/keycloak:21.1.0
       build:
          context: .
          dockerfile: Dockerfile.keycloak
