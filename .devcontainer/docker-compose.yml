@@ -27,8 +27,49 @@ services:
       volumes:
          - ..:/work
       command: bash -c "/work/.devcontainer/init.sh && sleep infinity"
+      depends_on:
+         - idp
       networks:
          rimutec:
+
+   idp:
+      image: quay.io/keycloak/keycloak:21.1.0
+      build:
+         context: .
+         dockerfile: Dockerfile.keycloak
+      container_name: idp
+      hostname: idp.local
+      ports:
+         - "30424:8080"
+         - "30425:8443"
+      environment:
+         KC_HOSTNAME: localhost
+         KC_HOSTNAME_STRICT: "false"
+         KC_DB: postgres
+         KC_DB_USERNAME: dba
+         KC_DB_PASSWORD: password
+         KC_DB_SCHEMA: public
+         KC_DB_URL: jdbc:postgresql://idp-db.local:5432/
+         KEYCLOAK_ADMIN: admin
+         KEYCLOAK_ADMIN_PASSWORD: password
+      entrypoint: /opt/keycloak/bin/kc.sh start-dev
+      depends_on:
+         - idp-db
+      networks:
+         rimutec:
+
+   idp-db:
+      image: postgres
+      container_name: idp-db
+      hostname: idp-db.local
+      environment:
+         POSTGRES_PASSWORD: password
+         POSTGRES_USER: dba
+      ports:
+         - "30426:5432"
+      networks:
+         rimutec:
+
 
    # If you list further services (ie containers) here, place them in the same virtual network if
    # you want them being visible to each other. [Manfred, 10sep2022]
